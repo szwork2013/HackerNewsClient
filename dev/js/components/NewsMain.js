@@ -13,7 +13,8 @@ export default class NewsMain extends React.Component {
             <NewsList
                 currentCategory={this.props.currentCategory}
                 handler={this.props.getContentHandler} /> :
-            <NewsContent />;
+            <NewsContent
+                id={this.props.id}/>;
 
         return (
             <section>

@@ -38,7 +38,14 @@ export default class NewsList extends React.Component {
         }, () => console.log('error'));
     }
 
-    componentDidUpdate() {
+    getContent(id) {
+        this.props.handler(id);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!this.props.currentCategory || this.props.currentCategory === prevProps.currentCategory) {
+            return;
+        }
         this.getListIds();
     }
 
@@ -47,11 +54,15 @@ export default class NewsList extends React.Component {
     }
 
     render() {
-        let listHtml = this.state.data.map((obj) =>
-            <li key={obj.id}>
-                <a href='javascript:;' onClick={this.props.handler}>{obj.title}</a>
-            </li>
-        );
+        let listHtml = this.state.data.map((obj) => {
+            return obj.url ?
+                <li key={obj.id}>
+                    <a href={obj.url} target='_blank'>{obj.title}</a>
+                </li> :
+                <li key={obj.id}>
+                    <a href='javascript:;' onClick={this.getContent.bind(this, obj.id)}>{obj.title}</a>
+                </li>
+        });
 
         return (
             <ul>

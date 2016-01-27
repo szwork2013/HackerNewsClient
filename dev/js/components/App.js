@@ -9,21 +9,24 @@ export default class App extends React.Component {
 
         this.state = {
             category: 'index',
-            type: 'LIST'
+            type: 'LIST',
+            id: null
         };
     }
 
     changeCategory(category) {
         this.setState({
             category: category,
-            type: this.state.type
+            type: 'LIST',
+            id: null
         });
     }
 
-    getContent() {
+    getContent(id) {
         this.setState({
             category: this.state.category,
-            type: 'CONTENT'
+            type: 'CONTENT',
+            id: id
         });
     }
 
@@ -37,7 +40,8 @@ export default class App extends React.Component {
                 <NewsMain
                     type={this.state.type}
                     currentCategory={this.state.category}
-                    getContentHandler={this.getContent.bind(this)}/>
+                    getContentHandler={this.getContent.bind(this)}
+                    id={this.state.id}/>
             </div>
         );
     }
