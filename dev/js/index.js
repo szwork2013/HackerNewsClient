@@ -1,3 +1,9 @@
-import Nav from './components/Nav';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log(Nav);
+import App from './components/App.js';
+
+ReactDOM.render(
+    <App />,
+    document.getElementById('app')
+);

@@ -1,4 +1,1 @@
-h2,
-a:hover { color: #0099ff; }
-p,
-a { color: #333; }
+.active { color: red; }
