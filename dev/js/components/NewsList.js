@@ -1,6 +1,9 @@
 import React from 'react';
 import Firebase from 'firebase';
 
+import getCustomDate from '../utils/getCustomDate';
+import getHostName from '../utils/getHostName';
+
 export default class NewsList extends React.Component {
     constructor(props) {
         super(props);
@@ -13,8 +16,8 @@ export default class NewsList extends React.Component {
     }
 
     getListIds() {
+        this.props.toggleLoadingHandler();
         let url = this.props.api[this.props.currentCategory];
-
         new Firebase(url).startAt(null, this.state.pageIndex.toString()).limitToFirst(this.state.pageSize).once('value', (snapshot) => {
                 this.getListContent(snapshot.val())
             }
@@ -35,6 +38,7 @@ export default class NewsList extends React.Component {
 
         Promise.all(promiseList).then(data => {
             this.setState({data: data});
+            this.props.toggleLoadingHandler(false);
         }, () => console.log('error'));
     }
 
@@ -55,19 +59,27 @@ export default class NewsList extends React.Component {
 
     render() {
         let listHtml = this.state.data.map((obj) => {
-            return obj.url ?
-                <li key={obj.id}>
-                    <a href={obj.url} target='_blank'>{obj.title}</a>
-                </li> :
-                <li key={obj.id}>
-                    <a href='javascript:;' onClick={this.getContent.bind(this, obj.id)}>{obj.title}</a>
-                </li>
+            let linkHtml = obj.url ?
+                <a href={obj.url} target='_blank'>{obj.title} ({getHostName(obj.url)})</a> :
+                <a href='javascript:;' onClick={this.getContent.bind(this, obj.id)}>{obj.title}</a>;
+
+            return <div className="news-item pure-g" key={obj.id}>
+                <div className="pure-u-3-4">
+                    <h5 className="news-name">{obj.by}</h5>
+                    <h4 className="news-subject">
+                        {linkHtml}
+                    </h4>
+                    <p className="news-desc">
+                        {obj.score} points | {obj.kids ? obj.kids.length : '0'} comments | {getCustomDate(obj.time)}
+                    </p>
+                </div>
+            </div>
         });
 
         return (
-            <ul>
+            <div className="content">
                 {listHtml}
-            </ul>
+            </div>
         );
     }
 }

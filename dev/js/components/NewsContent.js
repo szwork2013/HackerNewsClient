@@ -1,6 +1,8 @@
 import React from 'react';
 import Firebase from 'firebase';
 
+import getCustomDate from '../utils/getCustomDate';
+
 export default class NewsContent extends React.Component {
     constructor(props) {
         super(props);
@@ -11,13 +13,14 @@ export default class NewsContent extends React.Component {
     }
 
     getContent() {
-        let url = this.props.api['item'] + this.props.id;
+        this.props.toggleLoadingHandler();
 
+        let url = this.props.api['item'] + this.props.id;
         new Firebase(url).once('value', (snapshot) => {
-            console.log(snapshot.val());
             this.setState({
                 data: snapshot.val()
             });
+            this.props.toggleLoadingHandler(false);
         })
     }
 
@@ -26,11 +29,14 @@ export default class NewsContent extends React.Component {
     }
 
     render() {
-        let text = this.state.data ? this.state.data.text : '加载中...';
+        let obj = this.state.data;
 
         return (
-            <div dangerouslySetInnerHTML={{__html: text}}>
-            </div>
+            obj ? <div className='content'>
+                <h2>{obj.title}</h2>
+                <p>{obj.score} points | {obj.kids ? obj.kids.length : '0'} comments | {getCustomDate(obj.time)}</p>
+                <div dangerouslySetInnerHTML={{__html: obj.text}}></div>
+            </div> : null
         );
     }
 };
