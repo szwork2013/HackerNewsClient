@@ -1,6 +1,7 @@
 import React from 'react';
 import Firebase from 'firebase';
 import Modal from 'react-modal';
+import { Promise } from 'es6-promise';
 
 import NewsList from './NewsList';
 import NewsContent from './NewsContent';

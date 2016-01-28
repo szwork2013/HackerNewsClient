@@ -17,6 +17,7 @@
     "body-parser": "^1.14.2",
     "classnames": "^2.2.3",
     "del": "^1.2.1",
+    "es6-promise": "^3.0.2",
     "express": "^4.13.4",
     "firebase": "^2.4.0",
     "gulp": "^3.9.0",
