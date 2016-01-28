@@ -31,7 +31,8 @@ gulp.task('html', ['clean'], function () {
     gulp.src(['dev/*.jade'])
         .pipe(jade({
             locals: {
-                production: argv.e = 'production'
+                production: argv.e = 'production',
+                version: Date.now()
             },
             pretty: true
         }))
