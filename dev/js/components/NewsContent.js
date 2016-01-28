@@ -34,6 +34,9 @@ export default class NewsContent extends React.Component {
 
         return (
             obj ? <div className='content'>
+                <p className='content-close'>
+                    <a onClick={this.props.closeModalHandler}>&times;</a>
+                </p>
                 <h2>{obj.title}</h2>
                 <p>{obj.score} points | {obj.kids ? obj.kids.length : '0'} comments | {getCustomDate(obj.time)}</p>
                 <div dangerouslySetInnerHTML={{__html: obj.text}}></div>

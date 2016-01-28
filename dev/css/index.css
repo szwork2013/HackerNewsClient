@@ -37,6 +37,21 @@ body {
     margin-bottom: 50px;
     line-height: 1.6em;
 }
+.content .content-close {
+    height: 2em;
+    overflow: hidden;
+}
+.content .content-close a {
+    display: block;
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    color: #fff;
+    background: #191818;
+    float: right;
+}
 
 /**
  * menu
@@ -48,7 +63,7 @@ body {
     top: 0;
     left: 0;
     bottom: 0;
-    z-index: 1000;
+    z-index: 10;
     background: #191818;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

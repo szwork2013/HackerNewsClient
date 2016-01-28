@@ -1,9 +1,10 @@
 import React from 'react';
 import Firebase from 'firebase';
+import Modal from 'react-modal';
 
 import NewsList from './NewsList';
 import NewsContent from './NewsContent';
-import { api } from '../config';
+import { api, customStyles } from '../config';
 
 export default class NewsMain extends React.Component {
     constructor(props) {
@@ -16,8 +17,10 @@ export default class NewsMain extends React.Component {
         this.pageSize = 20;
 
         this.state = {
-            listData: []
-        }
+            listData: [],
+            isModalOpen: false,
+            id: null
+        };
     }
 
     getListIds() {
@@ -77,7 +80,11 @@ export default class NewsMain extends React.Component {
     }
 
     getContent(id) {
-        this.props.getContentHandler(id);
+        //this.props.getContentHandler(id);
+        this.setState({
+            id: id,
+            isModalOpen: true
+        });
         this.removeScrollEvent();
     }
 
@@ -103,10 +110,16 @@ export default class NewsMain extends React.Component {
         this.timer = null;
     }
 
+    closeModal() {
+        this.setState({
+            id: null,
+            isModalOpen: false
+        });
+        this.bindScrollEvent();
+    }
+
     componentWillMount() {
-        if (this.props.type === 'LIST') {
-            this.getListIds();
-        }
+        this.getListIds();
     }
 
     componentWillUnmount() {
@@ -114,18 +127,20 @@ export default class NewsMain extends React.Component {
     }
 
     render() {
-        let body = this.props.type === 'LIST' ?
-            <NewsList
-                listData={this.state.listData}
-                removeScrollEventHandler={this.removeScrollEvent.bind(this)}
-                getContentHandler={this.getContent.bind(this)}/> :
-            <NewsContent
-                toggleLoadingHandler={this.props.toggleLoadingHandler}
-                id={this.props.id}/>;
-
         return (
             <div id='main'>
-                {body}
+                <NewsList
+                    listData={this.state.listData}
+                    removeScrollEventHandler={this.removeScrollEvent.bind(this)}
+                    getContentHandler={this.getContent.bind(this)}/>
+                <Modal
+                    isOpen={this.state.isModalOpen}
+                    style={customStyles}>
+                    <NewsContent
+                        toggleLoadingHandler={this.props.toggleLoadingHandler}
+                        closeModalHandler={this.closeModal.bind(this)}
+                        id={this.state.id}/>
+                </Modal>
             </div>
         );
     }

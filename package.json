@@ -33,6 +33,7 @@
     "optimist": "^0.6.1",
     "react": "^0.14.2",
     "react-dom": "^0.14.6",
+    "react-modal": "^0.6.1",
     "webpack": "^1.12.12",
     "webpack-core": "^0.6.8",
     "webpack-dev-middleware": "^1.5.1"

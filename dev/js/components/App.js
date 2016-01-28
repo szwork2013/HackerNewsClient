@@ -11,8 +11,6 @@ export default class App extends React.Component {
 
         this.state = {
             category: 'index',
-            type: 'LIST',
-            id: null,
             showMenu: false,
             loading: false
         };
@@ -21,15 +19,7 @@ export default class App extends React.Component {
     changeCategory(category) {
         this.setState({
             id: null,
-            category: category,
-            type: 'LIST'
-        });
-    }
-
-    getContent(id) {
-        this.setState({
-            id: id,
-            type: 'CONTENT'
+            category: category
         });
     }
 
@@ -68,10 +58,8 @@ export default class App extends React.Component {
                     currentCategory={this.state.category}
                     changeCategoryHandler={this.changeCategory.bind(this)}/>
                 <NewsMain
-                    key={this.state.category + this.state.type + this.state.id}
-                    type={this.state.type}
+                    key={this.state.category + this.state.id}
                     currentCategory={this.state.category}
-                    getContentHandler={this.getContent.bind(this)}
                     toggleLoadingHandler={this.toggleLoading.bind(this)}
                     id={this.state.id}/>
             </div>
