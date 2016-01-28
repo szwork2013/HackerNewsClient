@@ -3,6 +3,7 @@ import Firebase from 'firebase';
 
 import NewsList from './NewsList';
 import NewsContent from './NewsContent';
+import { api } from '../config';
 
 export default class NewsMain extends React.Component {
     constructor(props) {
@@ -21,9 +22,10 @@ export default class NewsMain extends React.Component {
 
     getListIds() {
         this.props.toggleLoadingHandler();
-        let url = this.props.api[this.props.currentCategory];
+        let url = api[this.props.currentCategory];
         let start = this.pageIndex * this.pageSize;
         let data, dataArray = [];
+
         new Firebase(url)
             .startAt(null, start.toString())
             .limitToFirst(this.pageSize)
@@ -55,7 +57,7 @@ export default class NewsMain extends React.Component {
 
     fireBaseWrapper(id) {
         return new Promise((resolve, reject) => {
-            let url = this.props.api['item'] + id;
+            let url = api['item'] + id;
             new Firebase(url).once('value', (snapshot) => {
                 resolve(snapshot.val())
             })
@@ -71,7 +73,7 @@ export default class NewsMain extends React.Component {
             });
             this.props.toggleLoadingHandler(false);
             this.bindScrollEvent();
-        }, () => console.log('error'));
+        }, () => console.error('firebase error: please try it later.'));
     }
 
     getContent(id) {
@@ -128,14 +130,3 @@ export default class NewsMain extends React.Component {
         );
     }
 }
-
-NewsMain.defaultProps = {
-    api: {
-        'index': 'https://hacker-news.firebaseio.com/v0/topstories',
-        'new': 'https://hacker-news.firebaseio.com/v0/newstories',
-        'show': 'https://hacker-news.firebaseio.com/v0/showstories',
-        'ask': 'https://hacker-news.firebaseio.com/v0/askstories',
-        'jobs': 'https://hacker-news.firebaseio.com/v0/jobstories',
-        'item': 'https://hacker-news.firebaseio.com/v0/item/'
-    }
-};

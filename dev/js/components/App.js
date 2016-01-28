@@ -3,6 +3,7 @@ import classNames from 'classNames';
 
 import NewsNav from './NewsNav.js';
 import NewsMain from './NewsMain.js';
+import { categories } from '../config';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -63,7 +64,7 @@ export default class App extends React.Component {
                 </a>
                 <div className={loadingClass}>加载中...</div>
                 <NewsNav
-                    categories={this.props.categories}
+                    categories={categories}
                     currentCategory={this.state.category}
                     changeCategoryHandler={this.changeCategory.bind(this)}/>
                 <NewsMain
@@ -77,7 +78,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-App.defaultProps = {
-    categories: ['index', 'new', 'show', 'ask', 'jobs']
-};

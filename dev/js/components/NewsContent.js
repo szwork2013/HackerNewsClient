@@ -2,6 +2,7 @@ import React from 'react';
 import Firebase from 'firebase';
 
 import getCustomDate from '../utils/getCustomDate';
+import { api } from '../config';
 
 export default class NewsContent extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export default class NewsContent extends React.Component {
     getContent() {
         this.props.toggleLoadingHandler();
 
-        let url = this.props.api['item'] + this.props.id;
+        let url = api['item'] + this.props.id;
         new Firebase(url).once('value', (snapshot) => {
             this.setState({
                 data: snapshot.val()
@@ -38,16 +39,5 @@ export default class NewsContent extends React.Component {
                 <div dangerouslySetInnerHTML={{__html: obj.text}}></div>
             </div> : null
         );
-    }
-};
-
-NewsContent.defaultProps = {
-    api: {
-        'index': 'https://hacker-news.firebaseio.com/v0/topstories',
-        'new': 'https://hacker-news.firebaseio.com/v0/newstories',
-        'show': 'https://hacker-news.firebaseio.com/v0/showstories',
-        'ask': 'https://hacker-news.firebaseio.com/v0/askstories',
-        'jobs': 'https://hacker-news.firebaseio.com/v0/jobstories',
-        'item': 'https://hacker-news.firebaseio.com/v0/item/'
     }
 };
