@@ -2,11 +2,13 @@ var gulp = require('gulp'),
     gutil = require('gulp-util'),
     rename = require('gulp-rename'),
     jade = require('gulp-jade'),
+    concat = require('gulp-concat'),
     minifyCss = require('gulp-minify-css'),
     copy = require('gulp-copy'),
     shell = require('gulp-shell'),
     del = require('del'),
     webpack = require('webpack'),
+    argv = require('optimist').argv,
     webpackConfig = require('./webpack.config.js');
 
 gulp.task('clean', function (cb) {
@@ -14,9 +16,9 @@ gulp.task('clean', function (cb) {
 });
 
 gulp.task('css', ['clean'], function () {
-    return gulp.src('dev/css/**/*.css')
+    return gulp.src(['dev/css/pure.css', 'dev/css/index.css'])
+        .pipe(concat('index.min.css'))
         .pipe(minifyCss())
-        .pipe(rename('index.min.css'))
         .pipe(gulp.dest('dist/css'));
 });
 
@@ -28,6 +30,9 @@ gulp.task('img', ['clean'], function () {
 gulp.task('html', ['clean'], function () {
     gulp.src(['dev/*.jade'])
         .pipe(jade({
+            locals: {
+                production: argv.e = 'production'
+            },
             pretty: true
         }))
         .pipe(gulp.dest('dist'));

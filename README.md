@@ -15,5 +15,5 @@ gulp server
 build:
 
 ```shell
-gulp build
+gulp build -e production
 ```

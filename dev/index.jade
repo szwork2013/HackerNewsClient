@@ -4,8 +4,11 @@ html(lang='zh-CN')
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title Hacker News Client
-    link(href='css/pure.css', type='text/css', rel='stylesheet')
-    link(href='css/index.css', type='text/css', rel='stylesheet')
+    if production
+      link(href='css/index.min.css', type='text/css', rel='stylesheet')
+    else
+      link(href='css/pure.css', type='text/css', rel='stylesheet')
+      link(href='css/index.css', type='text/css', rel='stylesheet')
   body
     div#app
     script(type='text/javascript', src='js/index.js')
