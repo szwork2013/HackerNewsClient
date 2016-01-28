@@ -18,6 +18,9 @@ export default class NewsList extends React.Component {
 
     render() {
         let listHtml = this.props.listData.map((obj) => {
+            if (!obj) {
+                return '';
+            }
             let linkHtml = obj.url ?
                 <a href={obj.url} target='_blank'>{obj.title} ({getHostName(obj.url)})</a> :
                 <a href='javascript:;' onClick={this.getContent.bind(this, obj.id)}>{obj.title}</a>;

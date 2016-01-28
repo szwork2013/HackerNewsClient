@@ -24,9 +24,12 @@ export default class NewsMain extends React.Component {
     }
 
     getListIds() {
+        this.refreshId();
+
         this.props.toggleLoadingHandler();
         let url = api[this.props.currentCategory];
         let start = this.pageIndex * this.pageSize;
+        let _id = NewsMain._id;
         let data, dataArray = [];
 
         new Firebase(url)
@@ -51,7 +54,7 @@ export default class NewsMain extends React.Component {
                     });
                 }
 
-                this.getListContent(dataArray);
+                this.getListContent(dataArray, _id);
             }
         );
 
@@ -67,10 +70,13 @@ export default class NewsMain extends React.Component {
         });
     }
 
-    getListContent(ids) {
+    getListContent(ids, _id) {
         let promiseList = ids.map((id) => this.fireBaseWrapper(id));
 
         Promise.all(promiseList).then(data => {
+            if (_id !== NewsMain._id) {
+                return;
+            }
             this.setState({
                 listData: this.state.listData.concat(data)
             });
@@ -118,11 +124,16 @@ export default class NewsMain extends React.Component {
         this.bindScrollEvent();
     }
 
+    refreshId() {
+        NewsMain._id = Date.now();
+    }
+
     componentWillMount() {
         this.getListIds();
     }
 
     componentWillUnmount() {
+        this.refreshId();
         this.removeScrollEvent();
     }
 
@@ -145,3 +156,5 @@ export default class NewsMain extends React.Component {
         );
     }
 }
+
+NewsMain._id = null;
