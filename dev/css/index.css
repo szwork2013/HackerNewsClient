@@ -22,6 +22,7 @@ body {
 #app {
     position: relative;
     padding-left: 0;
+    overflow: hidden;
 }
 #app .active #menu {
     left: 150px;
@@ -56,6 +57,9 @@ body {
     color: #999;
     border: none;
     padding: 0.6em 0 0.6em 0.6em;
+}
+#menu a.pure-menu-disabled {
+    cursor: default;
 }
 #menu .pure-menu,
 #menu .pure-menu ul {
@@ -119,13 +123,15 @@ body {
 .loading {
     position: fixed;
     width: 5em;
-    height: 1em;
+    height: 1.5em;
+    line-height: 1.5em;
     top: 0;
     left: 50%;
     margin-left: -2.5em;
     text-align: center;
     z-index: 10;
-    color: #828877;
+    color: #fff;
+    background: #191818;
 }
 .loading-end {
     display: none;

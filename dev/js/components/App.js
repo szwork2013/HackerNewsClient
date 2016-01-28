@@ -19,41 +19,28 @@ export default class App extends React.Component {
 
     changeCategory(category) {
         this.setState({
-            category: category,
-            type: 'LIST',
             id: null,
-            showMenu: this.state.showMenu,
-            loading: this.state.loading
+            category: category,
+            type: 'LIST'
         });
     }
 
     getContent(id) {
         this.setState({
-            category: this.state.category,
-            type: 'CONTENT',
             id: id,
-            showMenu: this.state.showMenu,
-            loading: this.state.loading
+            type: 'CONTENT'
         });
     }
 
     toggleMenu() {
         this.setState({
-            category: this.state.category,
-            type: this.state.type,
-            id: this.state.id,
-            showMenu: !this.state.showMenu,
-            loading: this.state.loading
+            showMenu: !this.state.showMenu
         });
     }
 
     toggleLoading(show) {
         show = Object.prototype.toString.call(show) === '[object Boolean]' ? show : true;
         this.setState({
-            category: this.state.category,
-            type: this.state.type,
-            id: this.state.id,
-            showMenu: this.state.showMenu,
             loading: show
         });
     }
@@ -80,6 +67,7 @@ export default class App extends React.Component {
                     currentCategory={this.state.category}
                     changeCategoryHandler={this.changeCategory.bind(this)}/>
                 <NewsMain
+                    key={this.state.category + this.state.type + this.state.id}
                     type={this.state.type}
                     currentCategory={this.state.category}
                     getContentHandler={this.getContent.bind(this)}
