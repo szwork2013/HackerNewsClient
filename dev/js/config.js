@@ -27,6 +27,8 @@ var customStyles = {
         height: '100%',
         width: '100%',
         marginRight: '-50%',
+        WebkitTransform: 'translate(-50%, -50%)',
+        msTransform: 'translate(-50%, -50%)',
         transform: 'translate(-50%, -50%)',
         zIndex: 101,
         overflow: 'auto'
